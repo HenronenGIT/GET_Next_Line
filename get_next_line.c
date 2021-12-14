@@ -31,9 +31,7 @@ int	get_next_line(const int fd, char **line)
 	char	temp[BUFF_SIZE + 1]; /*read() reads here*/
 	int		read_ret; /* loop end condition */
 	size_t	i;
-	size_t	j;
 
-	j = 0;
 	i = 0;
 	read_ret = 1;
 	while (read_ret != 0)
@@ -42,26 +40,26 @@ int	get_next_line(const int fd, char **line)
 			fd_array[i] = ft_strnew(BUFF_SIZE);
 
 		read_ret = read(fd, temp, BUFF_SIZE);
-		//printf("temp after read:%s\n", temp);
 		if (ft_strchr(temp, '\n') != '\0')
 		{
-			while (temp[j] != '\n')
-				j++;			
-			//printf("trimmed temp:%s\n", ft_strtrim(temp));
-			//fd_array[i] = ft_strjoin(fd_array[i], ft_strtrim(temp));
-			// FUNCTION TO RETURN SUB STR TO TEMP - 1
+			//need to save chars what goes over the buffer!
+			
 			fd_array[i] = ft_strjoin(fd_array[i], ft_strsub(temp, 0, find_eofl(temp)));
-		
-			/* add fd_array to line?*/
-			ft_strcpy(line[i], fd_array[i]);
+
+
+			line [0] = ft_strnew(ft_strlen(fd_array[i]));
+			ft_strcpy(*line, fd_array[i]);
 			i++;
+			ft_strclr(fd_array[i]);
+			return (0);
 			break ;
 		}
 		fd_array[i] = ft_strjoin(fd_array[i], temp);
+
 		ft_strclr(temp);
 	}
-	printf("Final:%s| END OF THE LINE\n", fd_array[0]);
+	//printf("Final:%s| END OF THE LINE\n", fd_array[0]);
 	//ft_print_array(fd_array);
 	// return 0, -1 or 1
-	return (0);
+	return (1);
 }
