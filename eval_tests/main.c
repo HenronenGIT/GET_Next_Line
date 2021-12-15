@@ -24,5 +24,7 @@ int	main(void)
 		printf("open () error!\n");
 		return (1);
 	}
-	get_next_line(fd, &line);
+	printf("%d\n", get_next_line(fd, &line));
+	printf("line:|%s|\n", line);
+
 }
