@@ -3,63 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaronen <hmaronen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hmaronen <hmaronen@student.Hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 13:12:40 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/09 13:12:43 by hmaronen         ###   ########.fr       */
+/*   Created: 2021/12/15 10:12:40 by hmaronen          #+#    #+#             */
+/*   Updated: 2021/12/15 10:12:41 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "get_next_line.h"
-#include <stdio.h>//TEMP
-
-/* CAN ADD TO LIBRARY AS WELL */
-static int	find_eofl(char *s)
-{
-	size_t	j;
-
-	j = 0;
-	while (s[j] != '\n')
-		j++;
-	return (j);
-}
+#include <stdio.h>
 
 int	get_next_line(const int fd, char **line)
 {
-	static char *fd_array[MAX_FD];/* Holds all fd:s */
-	char	temp[BUFF_SIZE + 1]; /*read() reads here*/
-	int		read_ret; /* loop end condition */
+	static char	*fd_arr[100];	//ADD	MAX_FD LATER
+	char	buf[BUFF_SIZE + 1];
+	int		read_ret;
 	size_t	i;
 
 	i = 0;
-	read_ret = 1;
+	read_ret = 0;
+
+
+	
+	read_ret = read(fd, buf, BUFF_SIZE);
+	if (read_ret == 0)
+		return (-1);
+
+	fd_arr[i] = ft_strnew(BUFF_SIZE);
+	ft_strcpy(fd_arr[i], buf);
+	ft_strclr(buf);
 	while (read_ret != 0)
 	{
-		if (!(fd_array[i]))
-			fd_array[i] = ft_strnew(BUFF_SIZE);
-
-		read_ret = read(fd, temp, BUFF_SIZE);
-		if (ft_strchr(temp, '\n') != '\0')
+		if (ft_strchr(buf, '\t') != NOT_FOUND)
 		{
-			//need to save chars what goes over the buffer!
-			
-			fd_array[i] = ft_strjoin(fd_array[i], ft_strsub(temp, 0, find_eofl(temp)));
-
-
-			line [0] = ft_strnew(ft_strlen(fd_array[i]));
-			ft_strcpy(*line, fd_array[i]);
-			i++;
-			ft_strclr(fd_array[i]);
-			return (0);
-			break ;
+			//ft_strsub	
+			printf("found\n");
 		}
-		fd_array[i] = ft_strjoin(fd_array[i], temp);
-
-		ft_strclr(temp);
+		read_ret = read(fd, buf, BUFF_SIZE);
+		fd_arr[i] = ft_strjoin(fd_arr[i], buf);
+		ft_strclr(buf);
+		printf("%d\n", read_ret);
 	}
-	//printf("Final:%s| END OF THE LINE\n", fd_array[0]);
-	//ft_print_array(fd_array);
-	// return 0, -1 or 1
-	return (1);
+
+	printf("fd_arr:\t%s\n", fd_arr[0]);
+	line = 0;
+	return (0);
 }
