@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaronen <hmaronen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 13:12:49 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/09 13:12:50 by hmaronen         ###   ########.fr       */
+/*   Created: 2021/11/29 14:58:50 by hmaronen          #+#    #+#             */
+/*   Updated: 2021/11/30 10:53:37 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 10
-# define MAX_FD 4096
-# define NOT_FOUND NULL
+#ifndef COLORS_H
+# define COLORS_H
 
-# include "colors.h"
-# include "libft.h"
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
+# include <stdio.h>
 
-int	get_next_line(const int fd, char **line);
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define RESET "\x1B[0m"
 
 #endif
