@@ -23,9 +23,9 @@ int	get_next_line(const int fd, char **line)
 	i = 0;
 	read_ret = 0;
 
-
-	
-	read_ret = read(fd, buf, BUFF_SIZE);
+	//alotus tapaus check static buffer
+	// lue vain jos bufferissa ei ole mitään
+		read_ret = read(fd, buf, BUFF_SIZE);
 	if (read_ret == 0)
 		return (-1);
 
