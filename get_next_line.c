@@ -22,39 +22,50 @@ static int	find_eofl(char *s)	//COULD ADD TO LIBFT
 		j++;
 	return (j);
 }
-int	check_buf_newline(char *buf)
+
+int	check_for_newline(char *str)
 {
-	if (ft_strchr(buf, '\n') != NOT_FOUND)
-		return (1);
+	if (ft_strchr(str, '\n') == NOT_FOUND)
+		return (NOT_FOUND);
 	else
-		return (0);
+		return (1);
 }
 
 void	read_until_newline(int fd, char *buf, char **fd_arr)
 {
 	ft_strclr(buf);
-	while (check_buf_newline(buf) == 0)
+	//printf("newline return:|%d|\n", check_buf_newline(buf));
+	while (check_for_newline(buf) == NOT_FOUND)
 	{
-		//read_ret = 
 		read(fd, buf, BUFF_SIZE);
 		//printf("%s\n", buf);
+		if (check_for_newline(buf) != NOT_FOUND)
+			break ;
 
-		fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strtrim(buf));
+		//fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strtrim(buf));
+		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		//printf("|%s|\n", fd_arr[fd]);
 		ft_strclr(buf);
 	}	
 }
 
-
-static void	last_buffer(char **fd_arr, char ***line, char *buf, int fd)
+static char	**last_buffer(char **fd_arr, char **line, char *buf, int fd)
 {
-
+	
 	fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
-	//printf("%s\n", fd_arr[fd]);
+	
+	//printf("%sbuf in last_buffer:|%s|\n", GREEN, buf);
+	//printf("%sfd_arr[fd] in last_buffer:|%s|\n",GREEN, fd_arr[fd]);
+	printf(RESET);
 
-	**line = fd_arr[fd];
-	//wrong pointer, line disappears after strclear
+	*line = ft_strdup(fd_arr[fd]);
 	ft_strclr(fd_arr[fd]);
-	fd_arr[fd] = ft_strsub(buf, BUFF_SIZE + 1, BUFF_SIZE);
+	printf("%s\n", buf);
+	fd_arr[fd] = ft_strsub(buf, 0, BUFF_SIZE);
+
+
+	//printf("last_buff() fd_arr[fd]:|%s|\n", fd_arr[fd]);
+	return(line);
 }
 
 int	get_next_line(const int fd, char **line)
@@ -75,30 +86,19 @@ int	get_next_line(const int fd, char **line)
 		if (read_ret == 0)
 			return (-1);
 	}
-	if (check_buf_newline(buf))
+	//HERE
+	if (check_for_newline(buf))
 	{
 		printf("%sfirst buf had NL\n", GREEN);
 		printf(RESET);
 
-		last_buffer(fd_arr, &line, buf, fd);
+		line = last_buffer(fd_arr, line, buf, fd);
 		return (1);
 	}
 	else
-	{
 		ft_strcpy(fd_arr[fd], buf);
-	}
-	
 	read_until_newline(fd, buf, fd_arr);
+	line = last_buffer(fd_arr, line, buf, fd);
 	
-	//read_until_newline(fd, buf, fd_arr);
-
-
-	last_buffer(fd_arr, &line, buf, fd);
-
-	*line = ft_strsub(buf, 0, find_eofl(buf));
-	fd_arr[fd] = ft_strsub(buf, find_eofl(buf) + 1, read_ret);
-
-	//printf("fd_arr:\t%s|\n", fd_arr[0]);
-	//line = 0;
 	return (1);
 }
