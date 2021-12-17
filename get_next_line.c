@@ -21,39 +21,51 @@ int	check_for_newline(char *str)
 		return (1);
 }
 
-void	read_until_newline(int fd, char *buf, char **fd_arr)
+int	read_until_newline(int fd, char *buf, char **fd_arr)
 {
+	int	read_ret;
 		//test without
-	ft_strclr(buf);
+	//ft_strclr(buf);
 	while (check_for_newline(buf) == NOT_FOUND)
 	{
-		read(fd, buf, BUFF_SIZE);
-		//printf("%s\n", buf);
+		read_ret = read(fd, buf, BUFF_SIZE);
+		if (read_ret == 0)
+			return (0);
 		if (check_for_newline(buf) != NOT_FOUND)
 			break ;
-
-		//fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strtrim(buf));
 		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
-		//printf("|%s|\n", fd_arr[fd]);
 		ft_strclr(buf);
-	}	
+	}
+	fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+	return (1);
+	
 }
 
-static char	**set_line(char **fd_arr, char **line, char *buf, int fd)
+static void	set_line(char **fd_arr, char **line, int fd)
 {
+	// test without clear line
 	ft_strclr(*line);
-	if (check_for_newline(fd_arr[fd]))
-		ft_memmove(*line, fd_arr[fd], find_eofl(fd_arr[fd]));
-	else
+	char	*temp;
+	size_t	new_line;
+	size_t	len;	
+
+	temp = NULL;
+	len = ft_strlen(fd_arr[fd]);
+	new_line = find_eofl(fd_arr[fd]);
+
+	//*line = ft_strsub(fd_arr[fd], 0, new_line);
+	ft_memmove(*line, fd_arr[fd],new_line);
+	if ((len - new_line) != 1)
 	{
-	*line = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
-	//fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
+		temp = ft_strsub(fd_arr[fd], new_line + 1, (len - new_line));
+		ft_strclr(fd_arr[fd]);
+		fd_arr[fd] = temp;
+		free(temp);
+		return ;
 	}
 
-		ft_strclr(fd_arr[fd]);
-		fd_arr[fd] = ft_strsub(buf, find_eofl(buf) + 1, (BUFF_SIZE - find_eofl(buf)) );
-		return (line);
-	//printf("last_buff() fd_arr[fd]:|%s|\n", fd_arr[fd]);
+	ft_bzero(fd_arr[fd], len);
+	return ;
 }
 
 int	get_next_line(const int fd, char **line)
@@ -63,33 +75,23 @@ int	get_next_line(const int fd, char **line)
 	int		read_ret;
 	size_t	i;
 
+	ft_bzero(buf, BUFF_SIZE + 1);
 	i = 0;
 	read_ret = 0;
-	// If fd array dont exist - read first time - check if read is empty - 
+	
 	if (!(fd_arr[fd]))
-	{
-		//need to strnew for strjoin to work - add to declaration?
 		fd_arr[fd] = ft_strnew(BUFF_SIZE);
-		read_ret = read(fd, buf, BUFF_SIZE);
-		if (read_ret == 0)
-			return (-1);
-	if (check_for_newline(buf))
+	if(check_for_newline(fd_arr[fd]))
 	{
-		line = set_line(fd_arr, line, buf, fd);
-		return (1);
-	}
-		else// pilataan toisen kierroksen jatetyt luvut talla
-			ft_strcpy(fd_arr[fd], buf);
-	}
-	if (check_for_newline(fd_arr[fd]))
-	{
-		set_line(fd_arr, line, buf, fd);
+		set_line(fd_arr, line, fd);
 		return (1);
 	}
 
-	
-	read_until_newline(fd, buf, fd_arr);
-	line = set_line(fd_arr, line, buf, fd);
-	
-	return (1);
+	if(read_until_newline(fd, buf, fd_arr))
+	{
+		set_line(fd_arr, line, fd);
+		return (1);
+	}
+	else
+		return(0);
 }
