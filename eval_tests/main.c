@@ -30,5 +30,11 @@ int	main(void)
 	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
 	printf("line:|%s|\n", line);
 
+	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
+	printf("line:|%s|\n", line);
+
+	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
+	printf("line:|%s|\n", line);
+
 	
 }
