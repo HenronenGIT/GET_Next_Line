@@ -13,53 +13,52 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	find_eofl(char *s)	//COULD ADD TO LIBFT
+int	check_for_newline(char *str)
 {
-	size_t	j;
-
-	j = 0;
-	while (s[j] != '\n')
-		j++;
-	return (j);
-}
-
-int	check_buf_newline(char *buf)
-{
-	if (ft_strchr(buf, '\n') != NOT_FOUND)
-		return (1);
+	if (ft_strchr(str, '\n') == NOT_FOUND)
+		return (NOT_FOUND);
 	else
-		return (0);
+		return (1);
 }
 
 void	read_until_newline(int fd, char *buf, char **fd_arr)
 {
+		//test without
 	ft_strclr(buf);
-	while (check_buf_newline(buf) == 0)
+	while (check_for_newline(buf) == NOT_FOUND)
 	{
-		//read_ret = 
 		read(fd, buf, BUFF_SIZE);
 		//printf("%s\n", buf);
+		if (check_for_newline(buf) != NOT_FOUND)
+			break ;
 
-		fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strtrim(buf));
+		//fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strtrim(buf));
+		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		//printf("|%s|\n", fd_arr[fd]);
 		ft_strclr(buf);
 	}	
 }
 
-static void	last_buffer(char **fd_arr, char ***line, char *buf, int fd)
+static char	**set_line(char **fd_arr, char **line, char *buf, int fd)
 {
+	ft_strclr(*line);
+	if (check_for_newline(fd_arr[fd]))
+		ft_memmove(*line, fd_arr[fd], find_eofl(fd_arr[fd]));
+	else
+	{
+	*line = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
+	//fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
+	}
 
-	fd_arr[fd] = ft_strjoin(fd_arr[fd], ft_strsub(buf, 0, find_eofl(buf)));
-	//printf("%s\n", fd_arr[fd]);
-
-	**line = fd_arr[fd];
-	//wrong pointer, line disappears after strclear
-	ft_strclr(fd_arr[fd]);
-	fd_arr[fd] = ft_strsub(buf, BUFF_SIZE + 1, BUFF_SIZE);
+		ft_strclr(fd_arr[fd]);
+		fd_arr[fd] = ft_strsub(buf, find_eofl(buf) + 1, (BUFF_SIZE - find_eofl(buf)) );
+		return (line);
+	//printf("last_buff() fd_arr[fd]:|%s|\n", fd_arr[fd]);
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*fd_arr[MAX_FD];	//ADD	MAX_FD LATER
+	static char	*fd_arr[MAX_FD];	//ADD MAX_FD LATER
 	char	buf[BUFF_SIZE + 1];
 	int		read_ret;
 	size_t	i;
@@ -74,30 +73,23 @@ int	get_next_line(const int fd, char **line)
 		read_ret = read(fd, buf, BUFF_SIZE);
 		if (read_ret == 0)
 			return (-1);
-	}
-	if (check_buf_newline(buf))
+	if (check_for_newline(buf))
 	{
-		printf("%sfirst buf had NL\n", GREEN);
-		printf(RESET);
-
-		last_buffer(fd_arr, &line, buf, fd);
+		line = set_line(fd_arr, line, buf, fd);
 		return (1);
 	}
-	else
-	{
-		ft_strcpy(fd_arr[fd], buf);
+		else// pilataan toisen kierroksen jatetyt luvut talla
+			ft_strcpy(fd_arr[fd], buf);
 	}
+	if (check_for_newline(fd_arr[fd]))
+	{
+		set_line(fd_arr, line, buf, fd);
+		return (1);
+	}
+
 	
 	read_until_newline(fd, buf, fd_arr);
+	line = set_line(fd_arr, line, buf, fd);
 	
-	//read_until_newline(fd, buf, fd_arr);
-
-	last_buffer(fd_arr, &line, buf, fd);
-
-	*line = ft_strsub(buf, 0, find_eofl(buf));
-	fd_arr[fd] = ft_strsub(buf, find_eofl(buf) + 1, read_ret);
-
-	//printf("fd_arr:\t%s|\n", fd_arr[0]);
-	//line = 0;
 	return (1);
 }

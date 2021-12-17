@@ -32,7 +32,6 @@ int	get_next_line(const int fd, char **line)
 		printf("%s\n", buf);
 	}
 	ft_strcpy(line[i], buf);
-	
 // Return 0, 1 or -1 depending if line was read was successful
 return(fd);
 }

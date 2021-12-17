@@ -18,7 +18,6 @@ FLAGS = -Wall -Wextra -Werror
 HEADERS = -I ./includes -I ../libft/includes -I ../
 LIB = ../libft/libft.a
 
-
 all:
 	@@$(GCC) $(FLAGS) $(SRC) $(LIB) $(HEADERS)
 
