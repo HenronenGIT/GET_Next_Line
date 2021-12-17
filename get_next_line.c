@@ -54,7 +54,8 @@ static void	set_line(char **fd_arr, char **line, int fd)
 	new_line = find_eofl(fd_arr[fd]);
 
 	//*line = ft_strsub(fd_arr[fd], 0, new_line);
-	ft_memmove(*line, fd_arr[fd],new_line);
+	//*line = ft_memalloc(new_line);
+	ft_memmove(*line, fd_arr[fd] ,new_line);
 	if ((len - new_line) != 1)
 	{
 		temp = ft_strsub(fd_arr[fd], new_line + 1, (len - new_line));
