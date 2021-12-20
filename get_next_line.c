@@ -22,7 +22,7 @@ int	check_for_newline(char *str)
 
 int	read_until_newline(int fd, char *buf, char **fd_arr)
 {
-	size_t	read_ret;
+	ssize_t	read_ret;
 		//test without
 	//ft_strclr(buf);
 	while (check_for_newline(buf) == NOT_FOUND)

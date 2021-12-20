@@ -17,7 +17,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 #Source files
-SRC = ../get_next_line.c ./main.c
+SRC = ../get_next_line.c ./main.c #./double_fd.c
 OBJ = $(SRC:.c=.o)
 
 #Includes

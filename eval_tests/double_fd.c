@@ -48,5 +48,6 @@ int	double_fd()
 
 	close(fd);
 	close(fd2);
+	return (0);
 	
 }

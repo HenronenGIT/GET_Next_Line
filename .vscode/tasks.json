@@ -5,14 +5,14 @@
             "label": "C/C++: get_next_line default",
             "command": "/usr/bin/gcc",
             "args": [
-                //"-fdiagnostics-color=always",
+                "-fdiagnostics-color=always",//
                 "-g",
 				"-L./libft",
 				"-lft",
 				"-Wall",
 				"-Wextra",
 				"-Werror",
-				//"-Wconversion",
+				"-Wconversion",
 				"-I./",
 				"-I./libft/includes",
 				"-I./eval_tests/includes",
