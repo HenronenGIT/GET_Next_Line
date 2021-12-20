@@ -29,6 +29,8 @@ int	read_until_newline(int fd, char *buf, char **fd_arr)
 	while (check_for_newline(buf) == NOT_FOUND)
 	{
 		read_ret = read(fd, buf, BUFF_SIZE);
+		buf[read_ret] = '\0';
+
 		if (read_ret == 0)
 			return (0);
 		if (check_for_newline(buf) != NOT_FOUND)
@@ -38,34 +40,33 @@ int	read_until_newline(int fd, char *buf, char **fd_arr)
 	}
 	fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
 	return (1);
-	
 }
 
 static void	set_line(char **fd_arr, char **line, int fd)
 {
 	// test without clear line
 	ft_strclr(*line);
+	
 	char	*temp;
-	size_t	new_line;
-	size_t	len;	
+	size_t	nl_index;
+	size_t	fd_len;
+	size_t	temp_len;
 
-	temp = NULL;
-	len = ft_strlen(fd_arr[fd]);
-	new_line = find_eofl(fd_arr[fd]);
+	fd_len = ft_strlen(fd_arr[fd]);
+	nl_index = find_eofl(fd_arr[fd]);
+	printf("%zu\n", nl_index);
 
-	//*line = ft_strsub(fd_arr[fd], 0, new_line);
-	//*line = ft_memalloc(new_line);
-	ft_memmove(*line, fd_arr[fd] ,new_line);
-	if ((len - new_line) != 1)
-	{
-		temp = ft_strsub(fd_arr[fd], new_line + 1, (len - new_line));
-		ft_strclr(fd_arr[fd]);
-		fd_arr[fd] = temp;
-		free(temp);
-		return ;
-	}
-
-	ft_bzero(fd_arr[fd], len);
+	// causes error//
+	*line = ft_strnew(nl_index);
+	temp_len = (fd_len - nl_index);
+	temp = ft_strnew(temp_len);
+	
+	ft_memmove(*line, fd_arr[fd], nl_index);
+	/*	DO WE NEED TEMP TO MOVE WHAT IS LEFT?	*/
+	ft_memmove(temp, (ft_strchr(fd_arr[fd], '\n') + 1), fd_len);
+	ft_strclr(fd_arr[fd]);
+	/*	MIGHT NEED REALLOCATION - make seperate func?	*/
+	fd_arr[fd] = temp;
 	return ;
 }
 
@@ -73,13 +74,10 @@ int	get_next_line(const int fd, char **line)
 {
 	static char	*fd_arr[MAX_FD];	//ADD MAX_FD LATER
 	char	buf[BUFF_SIZE + 1];
-	int		read_ret;
 	size_t	i;
 
+	i = 0;	
 	ft_bzero(buf, BUFF_SIZE + 1);
-	i = 0;
-	read_ret = 0;
-	
 	if (!(fd_arr[fd]))
 		fd_arr[fd] = ft_strnew(BUFF_SIZE);
 	if(check_for_newline(fd_arr[fd]))
@@ -87,12 +85,18 @@ int	get_next_line(const int fd, char **line)
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
-
 	if(read_until_newline(fd, buf, fd_arr))
 	{
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
+	if (!(fd_arr[fd]))
+		return (0);
 	else
-		return(0);
+	{
+
+		set_line(fd_arr, line, fd);
+		//ft_memmove(*line, fd_arr[fd], ft_strlen(fd_arr[fd]));
+	}
+	return(0);
 }
