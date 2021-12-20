@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int	check_for_newline(char *str)
 {
@@ -23,7 +22,7 @@ int	check_for_newline(char *str)
 
 int	read_until_newline(int fd, char *buf, char **fd_arr)
 {
-	int	read_ret;
+	size_t	read_ret;
 		//test without
 	//ft_strclr(buf);
 	while (check_for_newline(buf) == NOT_FOUND)
@@ -54,15 +53,14 @@ static void	set_line(char **fd_arr, char **line, int fd)
 
 	fd_len = ft_strlen(fd_arr[fd]);
 	nl_index = find_eofl(fd_arr[fd]);
-	printf("%zu\n", nl_index);
 
 	// causes error//
 	*line = ft_strnew(nl_index);
 	temp_len = (fd_len - nl_index);
-	temp = ft_strnew(temp_len);
 	
 	ft_memmove(*line, fd_arr[fd], nl_index);
 	/*	DO WE NEED TEMP TO MOVE WHAT IS LEFT?	*/
+	temp = ft_strnew(temp_len);
 	ft_memmove(temp, (ft_strchr(fd_arr[fd], '\n') + 1), fd_len);
 	ft_strclr(fd_arr[fd]);
 	/*	MIGHT NEED REALLOCATION - make seperate func?	*/
@@ -74,8 +72,10 @@ int	get_next_line(const int fd, char **line)
 {
 	static char	*fd_arr[MAX_FD];	//ADD	MAX_FD LATER
 	char	buf[BUFF_SIZE + 1];
+	size_t	fd_len;
 	size_t	i;
 
+	fd_len = 0;
 	i = 0;	
 	ft_bzero(buf, BUFF_SIZE + 1);
 	if (!(fd_arr[fd]))
@@ -90,13 +90,19 @@ int	get_next_line(const int fd, char **line)
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
-	if (!(fd_arr[fd]))
+	if (fd_arr[fd] == NULL)
+	{
+		ft_strclr(*line);
 		return (0);
+	}
 	else
 	{
-
-		set_line(fd_arr, line, fd);
-		//ft_memmove(*line, fd_arr[fd], ft_strlen(fd_arr[fd]));
+		//sub func "end of file"
+		fd_len = ft_strlen(fd_arr[fd]);
+		*line = ft_strnew(fd_len);
+		ft_memmove(*line, fd_arr[fd], fd_len);
+		ft_strclr(fd_arr[fd]);
+		return (1);
 	}
 	return(0);
 }
