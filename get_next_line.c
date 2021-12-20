@@ -45,27 +45,35 @@ static void	set_line(char **fd_arr, char **line, int fd)
 {
 	// test without clear line
 	ft_strclr(*line);
+	
 	char	*temp;
 	size_t	new_line;
-	size_t	len;	
+	size_t	len;
+	size_t	temp_len;
 
 	temp = NULL;
 	len = ft_strlen(fd_arr[fd]);
 	new_line = find_eofl(fd_arr[fd]);
+	temp_len = (len - new_line);
 
-	//*line = ft_strsub(fd_arr[fd], 0, new_line);
+
 	//*line = ft_memalloc(new_line);
 	ft_memmove(*line, fd_arr[fd] ,new_line);
-	if ((len - new_line) != 1)
-	{
-		temp = ft_strsub(fd_arr[fd], new_line + 1, (len - new_line));
-		ft_strclr(fd_arr[fd]);
-		fd_arr[fd] = temp;
-		free(temp);
-		return ;
-	}
+	temp = ft_strnew(temp_len);
+	ft_memmove(temp, (ft_strchr(fd_arr[fd], '\n') + 1), len);
+	ft_strclr(fd_arr[fd]);
+	/*	MIGHT NEED REALLOCATION - make seperate func?	*/
+	fd_arr[fd] = temp;
+	//if ((len - new_line) != 1)
+	//{
+	//	temp = ft_strsub(fd_arr[fd], new_line + 1, (len - new_line));
+	//	ft_strclr(fd_arr[fd]);
+	//	fd_arr[fd] = temp;
+	//	free(temp);
+	//	return ;
+	//}
 
-	ft_bzero(fd_arr[fd], len);
+	//ft_bzero(fd_arr[fd], len);
 	return ;
 }
 
@@ -94,5 +102,8 @@ int	get_next_line(const int fd, char **line)
 		return (1);
 	}
 	else
+	{
+		ft_strclr(*line);
+	}
 		return(0);
 }
