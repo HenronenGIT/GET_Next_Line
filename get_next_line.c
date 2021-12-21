@@ -44,7 +44,7 @@ int	read_until_newline(int fd, char *buf, char **fd_arr)
 static void	set_line(char **fd_arr, char **line, int fd)
 {
 	// test without clear line
-	ft_strclr(*line);
+	//ft_strclr(*line);
 	
 	char	*temp;
 	size_t	nl_index;
@@ -90,18 +90,19 @@ int	get_next_line(const int fd, char **line)
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
-	if (fd_arr[fd] == NULL)
-	{
-		ft_strclr(*line);
-		return (0);
-	}
+	//if (!(fd_arr[fd]))
+	//{
+	//	ft_strclr(*line);
+	//	return (0);
+	//}
+	/*	END OF THE FILE	*/
 	else
 	{
 		//sub func "end of file"
 		fd_len = ft_strlen(fd_arr[fd]);
 		*line = ft_strnew(fd_len);
 		ft_memmove(*line, fd_arr[fd], fd_len);
-		ft_strclr(fd_arr[fd]);
+		ft_memdel((void **)&fd_arr[fd]);
 		return (1);
 	}
 	return(0);
