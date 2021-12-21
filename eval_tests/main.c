@@ -30,6 +30,15 @@ int	main(void)
 	//normal_test();
 	//double_fd();
 
+	//char	*line2;
+
+	//line = NULL;
+	//printf("MAIN RETURN:%d\n", get_next_line(-5, &line2));
+	//printf("line:|%s|\n\n", line2);
+
+	//printf("MAIN RETURN:%d\n", get_next_line(4, &line2));
+	//printf("line:|%s|\n\n", line2);
+
 	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
 	printf("line:|%s|\n\n", line);
 

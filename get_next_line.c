@@ -12,33 +12,54 @@
 
 #include "get_next_line.h"
 
-int	check_for_newline(char *str)
+static int	check_for_newline(char *str)
 {
+	if(!(str))
+		return (0);
 	if (ft_strchr(str, '\n') == NOT_FOUND)
 		return (NOT_FOUND);
 	else
 		return (1);
 }
 
-int	read_until_newline(int fd, char *buf, char **fd_arr)
+static int	read_until_newline(int fd, char **fd_arr)
 {
 	ssize_t	read_ret;
-		//test without
-	//ft_strclr(buf);
-	while (check_for_newline(buf) == NOT_FOUND)
-	{
-		read_ret = read(fd, buf, BUFF_SIZE);
-		buf[read_ret] = '\0';
-
-		if (read_ret == 0)
-			return (0);
-		if (check_for_newline(buf) != NOT_FOUND)
-			break ;
+	char	buf[BUFF_SIZE + 1];
+	
+	if (!(fd_arr[fd]))
+		fd_arr[fd] = ft_strnew(BUFF_SIZE);
+	read_ret = read(fd, buf, BUFF_SIZE);
+	buf[read_ret] = '\0';
+	if (read_ret == -1)
+		return (-1);
+	if (check_for_newline(buf) == NOT_FOUND)
 		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
-		ft_strclr(buf);
+	/*	COULD ADD SOMETHING ELSE HERE */
+	if (read_ret == 0)
+		return (0);
+	if (check_for_newline(buf) != NOT_FOUND)
+	{
+		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		return (1);
 	}
-	fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
-	return (1);
+	ft_strclr(buf);
+	return (read_until_newline(fd, fd_arr));
+	//while (check_for_newline(buf) == NOT_FOUND)
+	//{
+		//read_ret = read(fd, buf, BUFF_SIZE);
+		//buf[read_ret] = '\0';
+		//if (read_ret == -1)
+			//return(-1);
+		//if (read_ret == 0)
+			//return (0);
+		//if (check_for_newline(buf) != NOT_FOUND)
+			//break ;
+		//fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		//ft_strclr(buf);
+	//}
+	//fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+	//return (1);
 }
 
 static void	set_line(char **fd_arr, char **line, int fd)
@@ -70,31 +91,26 @@ static void	set_line(char **fd_arr, char **line, int fd)
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*fd_arr[MAX_FD];	//ADD	MAX_FD LATER
-	char	buf[BUFF_SIZE + 1];
+	static char	*fd_arr[MAX_FD];
 	size_t	fd_len;
-	size_t	i;
+	ssize_t	read_return;
 
+	if (fd < 3)
+		return (-1);
 	fd_len = 0;
-	i = 0;	
-	ft_bzero(buf, BUFF_SIZE + 1);
-	if (!(fd_arr[fd]))
-		fd_arr[fd] = ft_strnew(BUFF_SIZE);
 	if(check_for_newline(fd_arr[fd]))
 	{
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
-	if(read_until_newline(fd, buf, fd_arr))
+	read_return = read_until_newline(fd, fd_arr);
+	if (read_return == -1)
+		return (-1);
+	else if(read_return == 1)
 	{
 		set_line(fd_arr, line, fd);
 		return (1);
 	}
-	//if (!(fd_arr[fd]))
-	//{
-	//	ft_strclr(*line);
-	//	return (0);
-	//}
 	/*	END OF THE FILE	*/
 	else
 	{
@@ -103,7 +119,6 @@ int	get_next_line(const int fd, char **line)
 		*line = ft_strnew(fd_len);
 		ft_memmove(*line, fd_arr[fd], fd_len);
 		ft_memdel((void **)&fd_arr[fd]);
-		return (1);
+		return (0);
 	}
-	return(0);
 }
