@@ -12,11 +12,10 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 100
+# define BUFF_SIZE 5
 # define MAX_FD 4096
 # define NOT_FOUND 0
 
-# include "colors.h"
 # include "libft.h"
 # include <stdlib.h>
 # include <fcntl.h>

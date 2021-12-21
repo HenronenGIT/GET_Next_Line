@@ -12,11 +12,10 @@
 
 #ifndef COLORS_H
 # define COLORS_H
-
-# include <stdio.h>
-
 # define RED "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define RESET "\x1B[0m"
+
+# include <stdio.h>
 
 #endif

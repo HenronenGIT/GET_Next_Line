@@ -10,19 +10,36 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = a.out
-SRC = ../get_next_line.c ./main.c
-O_FILES = $(SRCS:.c=.o)
-GCC = gcc
-FLAGS = -Wall -Wextra -Werror
-HEADERS = -I ./includes -I ../libft/includes -I ../
-LIB = ../libft/libft.a
+NAME = get_next_line
 
-all:
-	@@$(GCC) $(FLAGS) $(SRC) $(LIB) $(HEADERS)
+#Compilation and flags
+CC = gcc
+FLAGS = -Wall -Wextra -Werror
+
+#Source files
+SRC = ../get_next_line.c ./main.c #./double_fd.c
+OBJ = $(SRC:.c=.o)
+
+#Includes
+HEADERS = $(GNL_H) $(LIBFT_H) $(TEST_H)
+GNL_H = -I ../
+LIBFT_H = -I ../libft/includes
+#TEST_H = -I ./includes
+
+#Library
+LIB = -L ../libft -lft
+
+#Remove
+RM = /bin/rm -f
+
+all: $(NAME)
+
+$(NAME): $(SRC)
+	make -C ../libft/ fclean && make -C ../libft/
+	$(CC) $(FLAGS) $(HEADERS) $(LIB) $(SRC) -o $(NAME)
 
 clean:
-	/bin/rm -f $(O_FILES)
+	$(RM) $(OBJ)
 
 fclean: clean
 	/bin/rm -f $(NAME)
@@ -33,10 +50,7 @@ run:
 	@@./$(NAME)
 
 debug:
-	$(GCC) -g $(FLAGS) $(SRC) $(LIB) $(HEADERS)
+	$(CC) -g $(FLAGS) $(SRC) $(LIB) $(HEADERS)
 	lldb
-
-#debug clean:
-#	/bin/rm -rf a.out.dSYM
 
 .PHONY: all clean fclean re

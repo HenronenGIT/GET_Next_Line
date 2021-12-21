@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   double_fd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaronen <hmaronen@student.Hive.fi>        +#+  +:+       +#+        */
+/*   By: hmaronen <hmaronen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 10:12:30 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/15 10:12:32 by hmaronen         ###   ########.fr       */
+/*   Created: 2021/12/20 14:19:57 by hmaronen          #+#    #+#             */
+/*   Updated: 2021/12/20 14:19:59 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-//int double_fd();
-
-int	main(void)
+int	double_fd()
 {
 	int		fd;
+	int		fd2;
 	char	*line;
 
-	fd = open("./file.txt", O_RDONLY);
+	fd = open("./files/file.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("open () error!\n");
 		return (1);
 	}
-
-	//normal_test();
-	//double_fd();
-
 	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
+	printf("line:|%s|\n\n", line);
+
+	fd2 = open("./files/file2.txt", O_RDONLY);
+	if (fd2 == -1)
+	{
+		printf("open () error!\n");
+		return (1);
+	}
+	printf("MAIN RETURN:%d\n", get_next_line(fd2, &line));
 	printf("line:|%s|\n\n", line);
 
 	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
@@ -42,7 +46,8 @@ int	main(void)
 	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
 	printf("line:|%s|\n\n", line);
 
-	printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	printf("line:|%s|\n\n", line);
+	close(fd);
+	close(fd2);
 	return (0);
+	
 }
