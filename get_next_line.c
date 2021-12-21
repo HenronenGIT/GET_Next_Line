@@ -31,16 +31,20 @@ static int	read_until_newline(int fd, char **fd_arr)
 		fd_arr[fd] = ft_strnew(BUFF_SIZE);
 	bytes_read = read(fd, buf, BUFF_SIZE);
 	buf[bytes_read] = '\0';
+
+
+
+	
 	if (bytes_read == FD_DONT_EXIST)
 		return (-1);
 	//if (bytes_read == END_OF_FILE)
 	if (bytes_read == END_OF_FILE)
 		return (0);
-	if (bytes_read < BUFF_SIZE)
+	/*if (bytes_read < BUFF_SIZE)
 	{
 		fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
 		return(2);
-	}
+	}*/
 	fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
 	if (check_for_newline(fd_arr[fd]) == NOT_FOUND)
 	{
