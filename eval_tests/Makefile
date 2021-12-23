@@ -17,14 +17,17 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 #Source files
-SRC = ../get_next_line.c ./main.c #./double_fd.c
+SRC = ../get_next_line.c ./main.c		\
+$(TEST_PATH)/test_normal_with_newline.c	\
+$(TEST_PATH)/test_no_nl.c
 OBJ = $(SRC:.c=.o)
+TEST_PATH = ./tests
 
 #Includes
 HEADERS = $(GNL_H) $(LIBFT_H) $(TEST_H)
 GNL_H = -I ../
 LIBFT_H = -I ../libft/includes
-#TEST_H = -I ./includes
+TEST_H = -I ./includes
 
 #Library
 LIB = -L ../libft -lft
@@ -35,14 +38,14 @@ RM = /bin/rm -f
 all: $(NAME)
 
 $(NAME): $(SRC)
-	make -C ../libft/ fclean && make -C ../libft/
-	$(CC) $(FLAGS) $(HEADERS) $(LIB) $(SRC) -o $(NAME)
+	@@make -C ../libft/ fclean && make -C ../libft/
+	@@$(CC) $(FLAGS) $(HEADERS) $(LIB) $(SRC) -o $(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	@@$(RM) $(OBJ)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@@/bin/rm -f $(NAME)
 
 re: fclean all
 

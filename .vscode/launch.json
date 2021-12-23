@@ -7,10 +7,11 @@
 	
 		{
 			"name": "gcc -get_next_line default Build and debug active file",
-			"type": "cppdbg",
+			//"type": "cppdbg",
+			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceFolder}/get_next_line",
-			"args": [],
+			"args": ["<", "${workspaceFolder}/eval_tests/test_files/no_nl.txt",],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

@@ -14,6 +14,14 @@
 # define TEST_H
 
 # include <stdio.h>
+# include "libft.h"
 # include "get_next_line.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
 
+void	test_normal_with_newline();
+void	test_no_nl();
 #endif

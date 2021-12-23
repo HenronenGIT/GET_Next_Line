@@ -12,9 +12,14 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 5
+# define BUFF_SIZE 8
 # define MAX_FD 4096
 # define NOT_FOUND 0
+# define FD_DONT_EXIST -1
+# define END_OF_FILE 0
+# define LINE_READ 1
+# define FOUND 1
+//# define EOF 2
 
 # include "libft.h"
 # include <stdlib.h>

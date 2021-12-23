@@ -2,3 +2,5 @@ a.out
 a.out.dSYM
 .DS_Store
 .vscode/
+moulitest
+get_next_line
