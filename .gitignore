@@ -2,6 +2,7 @@ a.out
 a.out.dSYM
 .DS_Store
 .vscode/
-get_next_line.dSYM
+get_next_line.dSYM/Contents/
 moulitest
 get_next_line
+libft/
