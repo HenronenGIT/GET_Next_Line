@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test_no_nl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaronen <hmaronen@student.Hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 10:12:30 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/15 10:12:32 by hmaronen         ###   ########.fr       */
+/*   Created: 2021/12/22 15:19:05 by hmaronen          #+#    #+#             */
+/*   Updated: 2021/12/22 15:19:08 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include "test.h"
 
-int	main(void)
+void	no_nl()
 {
-	arbitrary_fd();
-	//test_normal_with_newline();
-	//test_no_nl();
+	int		fd;
+	char	*line;
 
-	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	//printf("line:|%s|\n\n", line);
-	return (0);
+	fd = 0;
+	/*	FOR MAKEFILE */
+	//fd = open("./test_files/no_nl.txt", O_RDONLY);
+	/*	FOR DEGUGGER	*/
+	fd = open("no_nl.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("open() error in test_no_nl\n");
+		return ;
+	}
+
+	printf("%d\n", get_next_line(fd, &line));
+	printf("%s\n", line);
+	close (fd);
 }

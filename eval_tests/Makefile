@@ -18,8 +18,9 @@ FLAGS = -Wall -Wextra -Werror
 
 #Source files
 SRC = ../get_next_line.c ./main.c		\
-$(TEST_PATH)/test_normal_with_newline.c	\
-$(TEST_PATH)/test_no_nl.c
+$(TEST_PATH)/normal_with_newline.c		\
+$(TEST_PATH)/no_nl.c					\
+$(TEST_PATH)/arbitrary_fd.c
 OBJ = $(SRC:.c=.o)
 TEST_PATH = ./tests
 

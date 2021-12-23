@@ -11,33 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-
-/*	replace_newline() function iterates trough string and replaces
-	all '\n' characters. If no '\n' characters was encountered return
-	value is 0. If even one '\n\ characters was replaced return value
-	is 1
-*/
-
-//int	replace_newline(char **line)
-//{
-//	size_t	i;
-//	int		ret;
-//
-//	ret = 0;
-//	i = 0;
-//	printf("%c\n", *line[i]);
-//	while (*line[i] != '\0')
-//	{
-//		if (*line[i] == '\n')
-//		{
-//			*line[i] = '\0';
-//			ret = 1;
-//		}
-//		i++;
-//	}
-//	return (ret);
-//}
 
 int	check_newline(char *str)
 {
@@ -55,18 +28,23 @@ void	set_line(int fd, char **fd_arr, char **line)
 	int		len;
 	int		line_len;
 
-	//ft_strclr(*line);
 	len = ft_strlen(fd_arr[fd]);
 	line_len = find_eofl(fd_arr[fd]);
-
-
+	//if (fd_arr[fd][0] == '\n')
+	//	return ;
 	*line = ft_strndup(fd_arr[fd], find_eofl(fd_arr[fd]) - 1);
-
-	//replace_newline(line);
+	if (**line == '\n')//
+		ft_memdel((void **)line);//
 	temp = ft_strndup(ft_strchr(fd_arr[fd], '\n') + 1, (len - line_len));
 	free(fd_arr[fd]);
 	fd_arr[fd] = ft_strdup(temp);
 	free(temp);
+}
+
+	/*free all?* - LINE 43*/
+void	set_last_line(int fd, char **fd_arr, char **line)
+{
+	*line = ft_strdup(fd_arr[fd]);
 }
 
 int	read_until_newline(int fd, char **fd_arr)
@@ -78,33 +56,33 @@ int	read_until_newline(int fd, char **fd_arr)
 	{
 		bytes_read = read(fd, buf, BUFF_SIZE);
 		buf[bytes_read] = '\0';
+		if (bytes_read == -1)//
+			return (-1);//
 		if (!(fd_arr[fd]))
 			fd_arr[fd] = ft_strdup(buf);
 		else
-		{
 			fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
-		}
 		if (bytes_read == 0)
-		{
 			return (0);
-		}
 	}
-		return (1);
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int	read_return;
 	static char	*fd_arr[MAX_FD];
+	int			read_return;
 
-	if (fd < 3)
+	if (fd < 0 || line == NULL)
 		return (-1);
 	read_return = read_until_newline(fd, fd_arr);
+	if (read_return == -1)
+		return (-1);
 	if (read_return == 1)
 		set_line(fd, fd_arr, line);
 	if (read_return == 0)
 	{
-		ft_strclr(*line);
+		set_last_line(fd, fd_arr, line);
 		return (0);
 	}
 	else
