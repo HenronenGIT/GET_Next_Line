@@ -15,8 +15,8 @@
 
 int	main(void)
 {
-	arbitrary_fd();
-	//test_normal_with_newline();
+	//arbitrary_fd();
+	normal_with_newline();
 	//test_no_nl();
 
 	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));

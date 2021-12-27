@@ -54,6 +54,7 @@ int	read_until_newline(int fd, char **fd_arr)
 
 	while (check_newline(fd_arr[fd]) == NOT_FOUND)
 	{
+		//ft_bzero(buf, BUFF_SIZE);
 		bytes_read = read(fd, buf, BUFF_SIZE);
 		buf[bytes_read] = '\0';
 		if (bytes_read == -1)//
@@ -61,7 +62,10 @@ int	read_until_newline(int fd, char **fd_arr)
 		if (!(fd_arr[fd]))
 			fd_arr[fd] = ft_strdup(buf);
 		else
-			fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		{
+			ft_realloc(&fd_arr[fd], buf);
+			//fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+		}
 		if (bytes_read == 0)
 			return (0);
 	}
@@ -84,6 +88,7 @@ int	get_next_line(int fd, char **line)
 	{
 		set_last_line(fd, fd_arr, line);
 		return (0);
+		free(fd_arr[fd]);//
 	}
 	else
 		return (1);

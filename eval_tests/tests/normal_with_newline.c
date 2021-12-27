@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_normal_with_newline.c                         :+:      :+:    :+:   */
+/*   normal_with_newline.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaronen <hmaronen@student.Hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:40:36 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/22 15:40:37 by hmaronen         ###   ########.fr       */
+/*   Updated: 2021/12/27 13:58:28 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	normal_with_newline()
 		return ;
 	}
 
-	while (i <= 2)
+	
+	while (i <= 4)
 	{
 		printf("RET|%d|\n",get_next_line(fd, &line));
 		printf("|%s|\n\n", line);
@@ -47,4 +48,5 @@ void	normal_with_newline()
 	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
 	//printf("line:|%s|\n\n", line);
 	close(fd);
+	free(line);
 }
