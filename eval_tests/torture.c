@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   torture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaronen <hmaronen@student.Hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 10:12:30 by hmaronen          #+#    #+#             */
-/*   Updated: 2021/12/15 10:12:32 by hmaronen         ###   ########.fr       */
+/*   Created: 2021/12/29 22:17:24 by hmaronen          #+#    #+#             */
+/*   Updated: 2021/12/29 22:17:26 by hmaronen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 
 int	main(void)
 {
-	int counter;
+	int		fd;
+	char	*line;
 
-	counter = 0;
-//	if (arbitrary_fd() == 0)
-//		counter++;
-	if (normal_with_newline() == 0)
-		counter++;
-//	if (no_nl() == 0)
-//		counter++;
-//	if (double_fd() == 0)
-//		counter++;
-	printf("%s [%d/%d] Tests passed\n",GREEN, counter, TEST_COUNT);
-	printf(RESET);
-	return (0);
+	fd = open("./test_files/torture.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("open() failed torture.c");
+		return (1);
+	}
+	while (get_next_line(fd, &line) != 0)
+	{
+		get_next_line(fd, &line);
+		printf("%s\n", line);
+		if ((get_next_line(fd, &line) == 0))
+		{
+			close (fd);
+			fd = open("./test_files/torture.txt", O_RDONLY);
+		}
+	}
+	//close(fd);
 }

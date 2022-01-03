@@ -12,41 +12,71 @@
 
 #include "test.h"
 
-void	normal_with_newline()
+int	normal_with_newline()
 {
 	int		fd;
 	size_t	i;
 	char	*line;
+	int		ret;
+	int		pass;
 
+	pass = 0;
+	ret = 0;
 	i = 0;
 	//fd = open("normal_with_newline.txt", O_RDONLY);
 	fd = open("./test_files/normal_with_newline.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("open () error in normal_with_newline test!\n");
-		return ;
+		return (0);
 	}
-
-	
-	while (i <= 4)
+	/* Reading abc\n	*/
+	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "abc") != 0)
 	{
-		printf("RET|%d|\n",get_next_line(fd, &line));
-		printf("|%s|\n\n", line);
-		i++;
+		printf("%snormal_with_newline FAIL\n", RED);
+		printf("Ret value = %d\nExpected = 1\n", ret);
+		printf("line = |%s|\n", line);
+		printf("Expected |abc|\n");
+		printf(RESET);
+		pass = 1;
+	}
+	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "defg") != 0)
+	{
+		printf("%snormal_with_newline FAIL\n", RED);
+		printf("Ret value = %d\nExpected = 1\n", ret);
+		printf("line = |%s|\n", line);
+		printf("Expected |defg|\n");
+		printf(RESET);
+		pass = 1;
+	}
+	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "hijk") != 0)
+	{
+		printf("%snormal_with_newline FAIL\n", RED);
+		printf("Ret value = %d\nExpected = 1\n", ret);
+		printf("line = |%s|\n", line);
+		printf("Expected |hijk|\n");
+		printf(RESET);
+		pass = 1;
+	}
+	if ((ret = get_next_line(fd, &line)) != 0 || strcmp(line, "") != 0)
+	{
+		printf("%snormal_with_newline FAIL\n", RED);
+		printf("Ret value = %d\nExpected = 1\n", ret);
+		printf("line = |%s|\n", line);
+		printf("Expected ||\n");
+		printf(RESET);
+		pass = 1;
 	}
 
-	//printf("Normal test!\n");
-	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	//printf("line:|%s|\n\n", line);
+	//while (i <= 3)
+	//{
+	//	printf("RET|%d|\n",get_next_line(fd, &line));
+	//	printf("|%s|\n\n", line);
+	//	i++;
+	//}
 
-	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	//printf("line:|%s|\n\n", line);
-
-	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	//printf("line:|%s|\n\n", line);
-
-	//printf("MAIN RETURN:%d\n", get_next_line(fd, &line));
-	//printf("line:|%s|\n\n", line);
 	close(fd);
 	free(line);
+	line = NULL;
+	return (pass);
 }

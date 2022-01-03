@@ -12,14 +12,36 @@
 
 #include "test.h"
 
-void arbitrary_fd()
+int	arbitrary_fd()
 {
 	int		fd;
 	char	*line;
-
+	int		ret;
+	int		pass;
+	
+	pass = 0;
+	ret = 0;
 	line = NULL;
 	fd = 21;
-	printf("Return value:|%d|\n", get_next_line(fd, &line));
-	printf("%s\n", line);
-	return ;
+	ret = get_next_line(fd, &line);
+	if (line != NULL)
+	{
+		printf("%sarbitrary test FAIL\tline = %s\n", RED, line);
+		printf(RESET);
+		pass = 1;
+	}
+	if (ret != -1)
+	{
+		printf("%sarbitrary test FAIL\n", RED);
+		printf("Return value was:|%d|\n", ret);
+		printf(RESET);
+		pass = 1;
+	}
+	
+	//printf("Return value:|%d|\n", get_next_line(fd, &line));
+	//printf("%s\n", line);
+	free(line);
+	line = NULL;
+	
+	return (pass);
 }

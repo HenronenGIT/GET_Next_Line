@@ -22,9 +22,13 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/uio.h>
+# include <string.h>
 
-void	normal_with_newline();
-void	no_nl();
-void	arbitrary_fd();
+# define TEST_COUNT 4
+
+int		double_fd();
+int		normal_with_newline();
+int		no_nl();
+int		arbitrary_fd();
 
 #endif

@@ -20,7 +20,9 @@ FLAGS = -Wall -Wextra -Werror
 SRC = ../get_next_line.c ./main.c		\
 $(TEST_PATH)/normal_with_newline.c		\
 $(TEST_PATH)/no_nl.c					\
-$(TEST_PATH)/arbitrary_fd.c
+$(TEST_PATH)/arbitrary_fd.c				\
+$(TEST_PATH)/double_fd.c
+
 OBJ = $(SRC:.c=.o)
 TEST_PATH = ./tests
 
@@ -52,6 +54,11 @@ re: fclean all
 
 run:
 	@@./$(NAME)
+
+torture:
+	@@make -C ../libft/ fclean && make -C ../libft/
+	@@$(CC) $(FLAGS) $(HEADERS) $(LIB) ../get_next_line.c torture.c -o get_next_line
+
 
 debug:
 	$(CC) -g $(FLAGS) $(SRC) $(LIB) $(HEADERS)
