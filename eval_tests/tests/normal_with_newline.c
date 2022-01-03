@@ -40,6 +40,7 @@ int	normal_with_newline()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "defg") != 0)
 	{
 		printf("%snormal_with_newline FAIL\n", RED);
@@ -49,6 +50,7 @@ int	normal_with_newline()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "hijk") != 0)
 	{
 		printf("%snormal_with_newline FAIL\n", RED);
@@ -58,6 +60,7 @@ int	normal_with_newline()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	if ((ret = get_next_line(fd, &line)) != 0 || strcmp(line, "") != 0)
 	{
 		printf("%snormal_with_newline FAIL\n", RED);

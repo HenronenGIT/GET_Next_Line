@@ -21,7 +21,8 @@ SRC = ../get_next_line.c ./main.c		\
 $(TEST_PATH)/normal_with_newline.c		\
 $(TEST_PATH)/no_nl.c					\
 $(TEST_PATH)/arbitrary_fd.c				\
-$(TEST_PATH)/double_fd.c
+$(TEST_PATH)/double_fd.c				\
+$(TEST_PATH)/long_line.c
 
 OBJ = $(SRC:.c=.o)
 TEST_PATH = ./tests
@@ -58,6 +59,10 @@ run:
 torture:
 	@@make -C ../libft/ fclean && make -C ../libft/
 	@@$(CC) $(FLAGS) $(HEADERS) $(LIB) ../get_next_line.c torture.c -o get_next_line
+
+leaks:
+	@@make -C ../libft/ fclean && make -C ../libft/
+	@@$(CC) $(FLAGS) -fsanitize=leak $(HEADERS) $(LIB) $(SRC) -o $(NAME)
 
 
 debug:

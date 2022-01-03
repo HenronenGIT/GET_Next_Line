@@ -1,2 +1,3 @@
 #Run leaks detecting tool
-leaks -atExit -- ./get_next_line | grep LEAK:
+leaks ./get_next_line | grep LEAK: 
+#-atExit -- ./get_next_line | grep LEAK:

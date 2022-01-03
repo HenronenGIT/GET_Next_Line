@@ -50,7 +50,7 @@ int	read_until_newline(int fd, char **fd_arr)
 {
 	char	buf[BUFF_SIZE + 1];
 	int		bytes_read;
-
+//fix no_nl.c that return 1
 	while (check_newline(fd_arr[fd]) == NOT_FOUND)
 	{
 		bytes_read = read(fd, buf, BUFF_SIZE);
@@ -58,20 +58,22 @@ int	read_until_newline(int fd, char **fd_arr)
 		if (bytes_read == -1)//
 			return (-1);//
 		if (!(fd_arr[fd]))
-		{
 			fd_arr[fd] = ft_strdup(buf);
-			// Neccessary ?
-			//if (!fd_arr[fd])
-			//	return (-1);
-		}
 		else
 		{
 			//fails torture test and mouli fatline
+			//if (*buf != '\0')
 			ft_realloc(&fd_arr[fd], buf);
 			//fd_arr[fd] = ft_strjoin(fd_arr[fd], buf);
+			ft_bzero(buf, BUFF_SIZE + 1);
 		}
 		if (bytes_read == 0)
-			return (0);
+		{
+			//if (!(fd_arr[fd]))
+				return (0);
+			//else
+			//	return (1);
+		}
 	}
 	return (1);
 }

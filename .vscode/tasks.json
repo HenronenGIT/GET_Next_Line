@@ -20,6 +20,8 @@
                 "${workspaceFolder}/eval_tests/main.c",
                 "${workspaceFolder}/eval_tests/tests/*.c",
 				//"${workspaceFolder}/libft/*.c",
+				"${workspaceFolder}/libft/ft_strdup.c",
+				"${workspaceFolder}/libft/ft_realloc.c",
                 "-o",
                 "${workspaceFolder}/get_next_line",
             ],

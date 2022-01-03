@@ -43,6 +43,7 @@ int	double_fd()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	/* Read "1234" from 2nd FD */
 	if ((ret = get_next_line(fd2, &line) != 1 || strcmp(line, "1234") != 0))
 	{
@@ -53,6 +54,7 @@ int	double_fd()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	/* Read efhg from 1st fd */
 	if ((ret = get_next_line(fd, &line) != 1 || strcmp(line, "efgh") != 0))
 	{
@@ -63,6 +65,7 @@ int	double_fd()
 		printf(RESET);
 		pass = 1;
 	}
+	free(line);
 	/* Read 5678 from 2nd FD */
 	if ((ret = get_next_line(fd2, &line) != 1 || strcmp(line, "5678") != 0))
 	{
