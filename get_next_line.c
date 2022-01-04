@@ -31,6 +31,9 @@ static void	set_line(int fd, char **fd_arr, char **line)
 	if (check_newline(fd_arr[fd]) == L_NOT_FOUND)
 	{
 		*line = ft_strdup(fd_arr[fd]);
+		if (!(line))
+			return ;
+
 		ft_strdel(&fd_arr[fd]);
 	}
 	else
@@ -65,6 +68,7 @@ static int	read_until_newline(int fd, char **fd_arr)
 			else
 				return (1);
 		}
+		// MALLOC CHECK AND FREE
 		if (!(fd_arr[fd]))
 			fd_arr[fd] = ft_strdup(buf);
 		else
@@ -86,11 +90,16 @@ int	get_next_line(int fd, char **line)
 	if (read_return == L_FOUND)
 	{
 		set_line(fd, fd_arr, line);
-		return (L_FOUND);
+		// FREE?
+		if (!(line))
+			return (-1);
+			//
+		else
+			return (L_FOUND);
 	}
 	else
 	{
 		ft_strdel(&fd_arr[fd]);
 		return (0);
-	}	
+	}
 }

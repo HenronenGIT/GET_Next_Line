@@ -24,12 +24,16 @@
 # include <sys/uio.h>
 # include <string.h>
 
-# define TEST_COUNT 5
+# define TEST_COUNT 6
 
 int		double_fd();
 int		normal_with_newline();
 int		no_nl();
 int		arbitrary_fd();
 int		long_line();
+
+int		basic_tests();
+
+
 
 #endif
