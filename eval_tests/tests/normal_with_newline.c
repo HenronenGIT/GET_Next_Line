@@ -23,7 +23,7 @@ int	normal_with_newline()
 	pass = 0;
 	ret = 0;
 	i = 0;
-	//fd = open("normal_with_newline.txt", O_RDONLY);
+	//fd = open("./eval_tests/test_files/normal_with_newline.txt", O_RDONLY);
 	fd = open("./test_files/normal_with_newline.txt", O_RDONLY);
 	if (fd == -1)
 	{
@@ -31,55 +31,62 @@ int	normal_with_newline()
 		return (0);
 	}
 	/* Reading abc\n	*/
-	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "abc") != 0)
+	ret = get_next_line(fd, &line);
+	if (ret != 1 || strcmp(line, "abc") != 0)
 	{
-		printf("%snormal_with_newline FAIL\n", RED);
+		printf("%snormal_with_newline FAIL 1\n", RED);
+		printf(RESET);
 		printf("Ret value = %d\nExpected = 1\n", ret);
 		printf("line = |%s|\n", line);
 		printf("Expected |abc|\n");
-		printf(RESET);
 		pass = 1;
 	}
 	free(line);
-	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "defg") != 0)
+	/*	Read defg\n	*/
+	ret = get_next_line(fd, &line);
+	if (ret != 1 || strcmp(line, "defg") != 0)
 	{
-		printf("%snormal_with_newline FAIL\n", RED);
+		printf("%snormal_with_newline FAIL 2\n", RED);
+		printf(RESET);
 		printf("Ret value = %d\nExpected = 1\n", ret);
 		printf("line = |%s|\n", line);
 		printf("Expected |defg|\n");
-		printf(RESET);
 		pass = 1;
 	}
 	free(line);
-	if ((ret = get_next_line(fd, &line)) != 1 || strcmp(line, "hijk") != 0)
+	/*	Read hijk\n	*/
+	ret = get_next_line(fd, &line);
+	if (ret != 1 || strcmp(line, "hijk") != 0)
 	{
-		printf("%snormal_with_newline FAIL\n", RED);
+		printf("%snormal_with_newline FAIL 3\n", RED);
+		printf(RESET);
 		printf("Ret value = %d\nExpected = 1\n", ret);
 		printf("line = |%s|\n", line);
 		printf("Expected |hijk|\n");
-		printf(RESET);
 		pass = 1;
 	}
 	free(line);
-	if ((ret = get_next_line(fd, &line)) != 0 || strcmp(line, "") != 0)
+	/*	Reads '\0'	*/
+	ret = get_next_line(fd, &line);
+	if (ret != 0 || strcmp(line, "") != 0)
 	{
-		printf("%snormal_with_newline FAIL\n", RED);
-		printf("Ret value = %d\nExpected = 1\n", ret);
+		printf("%snormal_with_newline FAIL 4\n", RED);
+		printf(RESET);
+		printf("Ret value = %d\nExpected = 0\n", ret);
 		printf("line = |%s|\n", line);
 		printf("Expected ||\n");
-		printf(RESET);
 		pass = 1;
 	}
-
-	//while (i <= 3)
-	//{
-	//	printf("RET|%d|\n",get_next_line(fd, &line));
-	//	printf("|%s|\n\n", line);
-	//	i++;
-	//}
-
+	ret = get_next_line(fd, &line);
+	if (ret != 0 || strcmp(line, "") != 0)
+	{
+		printf("%snormal_with_newline FAIL 5\n", RED);
+		printf(RESET);
+		printf("Ret value = %d\nExpected = 0\n", ret);
+		printf("line = |%s|\n", line);
+		printf("Expected ||\n");
+		pass = 1;
+	}
 	close(fd);
-	free(line);
-	line = NULL;
 	return (pass);
 }

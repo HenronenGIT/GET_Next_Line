@@ -24,7 +24,7 @@ int	main(void)
 		printf("open() failed torture.c");
 		return (1);
 	}
-	while (get_next_line(fd, &line) != 0)
+	while (get_next_line(fd, &line) != 2)
 	{
 		get_next_line(fd, &line);
 		printf("%s\n", line);
@@ -34,5 +34,4 @@ int	main(void)
 			fd = open("./test_files/torture.txt", O_RDONLY);
 		}
 	}
-	//close(fd);
 }

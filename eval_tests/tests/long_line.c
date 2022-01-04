@@ -25,14 +25,14 @@ int	long_line()
 	fd = open("./test_files/long_line.txt", O_RDONLY);
 	if (fd == -1)
 	{
-		printf("1 double_fd open() error!\n");
+		printf("long line open() error!\n");
 		return(1);
 	}
 	/* Reads whole line ret should be 1	*/
 	ret = get_next_line(fd, &line);
-	if (( ret != 1) || strcmp(line, long_str) != 0)
+	if ((ret != 1) || strcmp(line, long_str) != 0)
 	{
-		printf("%slong_line [ERROR]\n", RED);
+		printf("%slong_line [ERROR] 1\n", RED);
 		printf(RESET);
 		if (strcmp(line, long_str) != 0)
 		{
@@ -43,5 +43,18 @@ int	long_line()
 		pass = 1;
 	}
 	free(line);
+//	ret = get_next_line(fd, &line);
+//	if ((ret != 0) || strcmp(line, "") != 0)
+//	{
+//		printf("%slong_line [ERROR] 2\n", RED);
+//		printf(RESET);
+//		if (strcmp(line, "") != 0)
+//		{
+//			printf("line = |%s|\nExpected ||\n", line);
+//			pass = 1;
+//		}
+//		printf("gnl_ret = %d\nExpected 1\n", ret);
+//		pass = 1;
+//	}
 	return(pass);
 }

@@ -58,7 +58,7 @@ run:
 
 torture:
 	@@make -C ../libft/ fclean && make -C ../libft/
-	@@$(CC) $(FLAGS) $(HEADERS) $(LIB) ../get_next_line.c torture.c -o get_next_line
+	@@$(CC) $(FLAGS) $(HEADERS) $(LIB) ../get_next_line.c ./tests/torture.c -o get_next_line
 
 leaks:
 	@@make -C ../libft/ fclean && make -C ../libft/

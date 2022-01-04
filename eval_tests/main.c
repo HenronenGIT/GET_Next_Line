@@ -28,7 +28,7 @@ int	main(void)
 		counter++;
 	if (long_line() == 0)
 		counter++;
-	//system("leaks get_next_line | grep LEAK");
+	system("leaks get_next_line | grep LEAK");
 
 	printf("%s [%d/%d] Tests passed\n",GREEN, counter, TEST_COUNT);
 	printf(RESET);
