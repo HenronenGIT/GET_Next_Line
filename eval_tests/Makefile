@@ -27,8 +27,6 @@ $(TEST_PATH)/basic_tests.c				\
 $(TEST_PATH)/middle_tests.c				\
 $(TEST_PATH)/advanced_tests.c			\
 
-
-
 OBJ = $(SRC:.c=.o)
 TEST_PATH = ./tests
 
