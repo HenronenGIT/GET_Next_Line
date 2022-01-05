@@ -40,7 +40,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sbasic_fail\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -49,6 +49,8 @@ int	basic_tests()
 		}
 		free(line);
 	}
+	close (p[0]);
+	close(out);
 	/*			2 lines 		*/
 	out = dup(1);
 	/* create descriptor pair for interprocess communication */
@@ -63,7 +65,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sbasic_fail\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -72,6 +74,8 @@ int	basic_tests()
 		}
 		free(line);
 	}
+	close (p[0]);
+	close(out);
 	out = dup(1);
 	/* create descriptor pair for interprocess communication */
 	pipe(p);
@@ -85,7 +89,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sbasic_fail\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -94,7 +98,10 @@ int	basic_tests()
 		}
 		free(line);
 	}
+	close (p[0]);
+	close(out);
 	/* BASIC FILE TESTS */
+	/*	1 line with newline	*/
 	fd = open("./test_files/basic_tests_1.txt", O_RDONLY);
 	if (fd == -1)
 	{
@@ -105,7 +112,7 @@ int	basic_tests()
 	{
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%s1l_8c FAIL 1\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -115,7 +122,7 @@ int	basic_tests()
 		free(line);
 	}
 	close(fd);
-
+	// 2 lines ending to new line
 	fd = open("./test_files/basic_tests_2.txt", O_RDONLY);
 	if (fd == -1)
 	{
@@ -127,7 +134,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%s2l_8c FAIL 1\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -137,7 +144,7 @@ int	basic_tests()
 		free(line);
 	}
 	close(fd);
-
+	//	8 lines ending to newline
 	fd = open("./test_files/basic_tests_3.txt", O_RDONLY);
 	if (fd == -1)
 	{
@@ -149,7 +156,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%s8l_8c FAIL 1\n", RED);
+			printf("%sBASIC TESTS FAIL\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);

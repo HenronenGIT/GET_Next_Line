@@ -23,7 +23,10 @@ $(TEST_PATH)/no_nl.c					\
 $(TEST_PATH)/arbitrary_fd.c				\
 $(TEST_PATH)/double_fd.c				\
 $(TEST_PATH)/long_line.c				\
-$(TEST_PATH)/basic_tests.c
+$(TEST_PATH)/basic_tests.c				\
+$(TEST_PATH)/middle_tests.c				\
+$(TEST_PATH)/advanced_tests.c			\
+
 
 
 OBJ = $(SRC:.c=.o)

@@ -24,7 +24,7 @@
 # include <sys/uio.h>
 # include <string.h>
 
-# define TEST_COUNT 6
+# define TEST_COUNT 8
 
 int		double_fd();
 int		normal_with_newline();
@@ -33,7 +33,8 @@ int		arbitrary_fd();
 int		long_line();
 
 int		basic_tests();
-
-
+int		basic_tests();
+int		middle_tests();
+int		advanced_tests();
 
 #endif

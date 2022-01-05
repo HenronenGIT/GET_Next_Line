@@ -37,11 +37,7 @@ int	arbitrary_fd()
 		printf(RESET);
 		pass = 1;
 	}
-	
-	//printf("Return value:|%d|\n", get_next_line(fd, &line));
-	//printf("%s\n", line);
 	free(line);
 	line = NULL;
-	
 	return (pass);
 }

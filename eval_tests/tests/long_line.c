@@ -42,19 +42,7 @@ int	long_line()
 		printf("gnl_ret = %d\nExpected 1\n", ret);
 		pass = 1;
 	}
+	close(fd);
 	free(line);
-//	ret = get_next_line(fd, &line);
-//	if ((ret != 0) || strcmp(line, "") != 0)
-//	{
-//		printf("%slong_line [ERROR] 2\n", RED);
-//		printf(RESET);
-//		if (strcmp(line, "") != 0)
-//		{
-//			printf("line = |%s|\nExpected ||\n", line);
-//			pass = 1;
-//		}
-//		printf("gnl_ret = %d\nExpected 1\n", ret);
-//		pass = 1;
-//	}
 	return(pass);
 }

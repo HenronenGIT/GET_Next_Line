@@ -15,24 +15,27 @@
 
 int	main(void)
 {
-	int counter;
+	int pass;
 
-	counter = 0;
+	pass = 0;
 	if (arbitrary_fd() == 0)
-		counter++;
+		pass++;
 	if (normal_with_newline() == 0)
-		counter++;
+		pass++;
 	if (no_nl() == 0)
-		counter++;
-	if (double_fd() == 0)
-		counter++;
+		pass++;
 	if (long_line() == 0)
-		counter++;
+		pass++;
 	if (basic_tests() == 0)
-		counter++;
+		pass++;
+	if(middle_tests() == 0)
+		pass++;
+	if(advanced_tests() == 0)
+		pass++;
+	if (double_fd() == 0)
+		pass++;
 	system("leaks get_next_line | grep LEAK");
-
-	printf("%s [%d/%d] Tests passed\n",GREEN, counter, TEST_COUNT);
+	printf("%s [%d/%d] Tests passed\n",GREEN, pass, TEST_COUNT);
 	printf(RESET);
 	return(0);
 }
