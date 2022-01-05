@@ -40,7 +40,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 1\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -57,7 +57,7 @@ int	basic_tests()
 	pipe(p);
 	/* Duplicate existing fd	*/
 	dup2(p[1], fd);
-	write(fd, "12345678\n12345678\n", 20);
+	write(fd, "12345678\n12345678\n", 18);
 	close(p[1]);
 	dup2(out, fd);
 	while (get_next_line(p[0], &line))
@@ -65,7 +65,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 2\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -89,7 +89,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 3\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -112,7 +112,7 @@ int	basic_tests()
 	{
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 4\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -134,7 +134,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 5\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
@@ -156,7 +156,7 @@ int	basic_tests()
 		//printf("%s\n", line);
 		if (ret != 1 || strcmp(line, str) != 0)
 		{
-			printf("%sBASIC TESTS FAIL\n", RED);
+			printf("%sBASIC TESTS FAIL 6\n", RED);
 			printf(RESET);
 			printf("Ret value = %d\nExpected = 1\n", ret);
 			printf("line = |%s|\n", line);
