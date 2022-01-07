@@ -20,11 +20,6 @@
 # define NOT_FOUND 0
 
 # include "libft.h"
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 
 int	get_next_line(const int fd, char **line);
 

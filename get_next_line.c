@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft.h"
 
-int	check_newline(char *str)
+static int	check_newline(char *str)
 {
 	if (!(str))
 		return (0);
@@ -42,7 +41,7 @@ static void	set_line(int fd, char **fd_arr, char **line)
 		line_len = find_eofl(fd_arr[fd]);
 		*line = ft_strndup(fd_arr[fd], find_eofl(fd_arr[fd]) - 1);
 		if (**line == '\n')
-			ft_strdel(line);
+			ft_strclr(*line);
 		remain = ft_strndup(ft_strchr(fd_arr[fd], '\n') + 1, (len - line_len));
 		free(fd_arr[fd]);
 		fd_arr[fd] = ft_strdup(remain);
@@ -81,7 +80,7 @@ int	get_next_line(int fd, char **line)
 	static char	*fd_arr[MAX_FD];
 	int			read_return;
 
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || line == NULL || fd >= MAX_FD)
 		return (-1);
 	read_return = read_until_newline(fd, fd_arr);
 	if (read_return == FD_DONT_EXIST)

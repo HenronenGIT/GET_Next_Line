@@ -35,19 +35,31 @@ int	no_nl()
 	ret = get_next_line(fd, &line);
 	if (ret != 1 || strcmp(line, "abcd") != 0)
 	{
-		printf("%sno_nl [FAIL]\n", RED);
+		printf("%sno_nl FAIL 1\n", RED);
 		printf(RESET);
 		printf("gnl_ret = %d\nExpected 1\nline = %s\nExpected abcd\n", ret, line);
 		fail = 1;
 	}
-	if ((ret = get_next_line(fd, (&line)) != 0 || strcmp(line, "abcd") != 0))
+	/* Reading line which ends to \0 */
+	ret = get_next_line(fd, &line);
+	if (ret != 0 || strcmp(line, "abcd") != 0)
 	{
-		printf("%sno_nl FAIL\n", RED);
+		printf("%sno_nl FAIL 2\n", RED);
+		printf(RESET);
+		printf("gnl_ret = %d\nExpected 0\nline = %s\nExpected abcd\n", ret, line);
+		fail = 1;
+	}
+	free(line);
+	line = NULL;
+	/*	Reading 0	*/
+	ret = get_next_line(fd, &line);
+	if (ret != 0 || line)
+	{
+		printf("%sno_nl FAIL 3\n", RED);
 		printf(RESET);
 		printf("Return value = %d\nline = %s\n", ret, line);
 		fail = 1;
 	}
-	free(line);
 	close (fd);
 	return (fail);
 }

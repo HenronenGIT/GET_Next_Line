@@ -15,14 +15,12 @@
 int	normal_with_newline()
 {
 	int		fd;
-	size_t	i;
 	char	*line;
 	int		ret;
 	int		pass;
 
 	pass = 0;
 	ret = 0;
-	i = 0;
 	//fd = open("./eval_tests/test_files/normal_with_newline.txt", O_RDONLY);
 	fd = open("./test_files/normal_with_newline.txt", O_RDONLY);
 	if (fd == -1)
@@ -30,9 +28,9 @@ int	normal_with_newline()
 		printf("open () error in normal_with_newline test!\n");
 		return (0);
 	}
-	/* Reading abc\n	*/
+	/* Reading abcd\n	*/
 	ret = get_next_line(fd, &line);
-	if (ret != 1 || strcmp(line, "abc") != 0)
+	if (ret != 1 || strcmp(line, "abcd") != 0)
 	{
 		printf("%snormal_with_newline FAIL 1\n", RED);
 		printf(RESET);
@@ -65,10 +63,12 @@ int	normal_with_newline()
 		printf("Expected |hijk|\n");
 		pass = 1;
 	}
-	free(line);
+	ft_strdel(&line);
+	
+	// LINE NOT NEET TO BE FREED
 	/*	Reads '\0'	*/
 	ret = get_next_line(fd, &line);
-	if (ret != 0 || strcmp(line, "") != 0)
+	if (ret != 0)
 	{
 		printf("%snormal_with_newline FAIL 4\n", RED);
 		printf(RESET);
@@ -77,8 +77,9 @@ int	normal_with_newline()
 		printf("Expected ||\n");
 		pass = 1;
 	}
+	ft_strdel(&line);
 	ret = get_next_line(fd, &line);
-	if (ret != 0 || strcmp(line, "") != 0)
+	if (ret != 0)
 	{
 		printf("%snormal_with_newline FAIL 5\n", RED);
 		printf(RESET);

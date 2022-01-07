@@ -32,5 +32,14 @@ int	arbitrary_fd()
 	}
 	free(line);
 	line = NULL;
+
+	/*	MAX_FD TEST	*/
+	fd = 999999;
+	ret = get_next_line(fd, &line);
+	if (ret != -1)
+	{
+		printf("%sarbitrary test FAIL\nline = |%s|\ngnl_ret = %d",RED, line, ret);
+		printf(RESET);
+	}
 	return (fail);
 }
